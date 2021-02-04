@@ -1,0 +1,12 @@
+version: '1'
+services:
+  jenkins:
+    container_name: jenkins
+    build:
+      context: .
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./test/:/var/jenkins_home
+      # jenkins_home é onde o jenkins armazena infos
+      # será replicado na pasta local test
