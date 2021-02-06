@@ -1,21 +1,21 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle-6.5' // tools without wrapper
-    }
     stages {
-        stage("run frontend") {
+        stage("build") {
             steps {
-                echo 'executando yarn...'
-                nodejs('NodeJS-10.19') { //wrapper
-                    sh 'yarn install'
-                }
+                echo 'construindo a aplicação'
             }
         }
-        stage("run backend") {
+
+        stage("test") {
             steps {
-                echo 'executando gradle...'
-                    sh './gradle -v'
+                echo 'testando a aplicação'
+            }
+        }
+
+        stage("deploy") {
+            steps {
+                echo 'implantando a aplicação'
             }
         }
     }   
