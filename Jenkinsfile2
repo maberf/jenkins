@@ -1,0 +1,33 @@
+CODE_CHANGES = getGitChanges() //capta alterações no Git e carrega a variável
+pipeline {
+    agent any
+    stages {
+        stage("build") {
+              when { /*execução só se estiver no master E com alterações
+                        de código*/
+                expression {
+                    BRANCH_NAME == 'master' && CODE_CHANGES == true
+                }
+            }
+            steps {//só será executado se a condição acima for true
+                echo 'construindo a aplicação'
+            }
+        }
+        stage("test") {
+            when { //execução só se estiver no master OU branch
+                   // env. é opcional, se refere a variável de ambiente
+                expression {
+                    env.BRANCH_NAME == 'master' || BRANCH_NAME == 'branch'
+                }
+            }
+            steps { //só será executado se a condição acima for true
+                echo 'testando a aplicação'
+            }
+        }
+        stage("deploy") {
+            steps {
+                echo 'implantando a aplicação'
+            }
+        }
+    }   
+}
